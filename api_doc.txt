@@ -1,0 +1,699 @@
+# Get Coins
+
+## OpenAPI
+
+````yaml api-reference/openapi.json get /coins
+paths:
+  path: /coins
+  method: get
+  servers:
+    - url: https://openapiv1.coinstats.app
+  request:
+    security:
+      - title: X API KEY
+        parameters:
+          query: {}
+          header:
+            X-API-KEY:
+              type: apiKey
+              description: 'API key needed to access the endpoints. Example: ''demo-api-key'''
+          cookie: {}
+    parameters:
+      path: {}
+      query:
+        page:
+          schema:
+            - type: number
+              required: false
+              example: 1
+        limit:
+          schema:
+            - type: number
+              required: false
+              example: 20
+        coinIds:
+          schema:
+            - type: string
+              required: false
+              description: Get coins by coinIds. Seperate by commas ( , )
+              example: bitcoin,ethereum,solana
+        currency:
+          schema:
+            - type: string
+              required: false
+              example: USD
+        name:
+          schema:
+            - type: string
+              required: false
+              description: Search coins by name
+              example: bitcoin
+        symbol:
+          schema:
+            - type: string
+              required: false
+              description: Get coins by symbol
+              example: BTC
+        blockchains:
+          schema:
+            - type: string
+              required: false
+              description: Seperate by commas ( , ) eg. ethereum,solana
+        includeRiskScore:
+          schema:
+            - type: string
+              required: false
+              description: true or false. Default - false
+        categories:
+          schema:
+            - type: string
+              required: false
+              description: Seperate by commas ( , ) eg. memecoins,sports
+        sortBy:
+          schema:
+            - type: string
+              required: false
+              description: One of filter fields
+              example: rank
+        sortDir:
+          schema:
+            - type: string
+              required: false
+              description: One of asc, desc
+              example: asc
+        marketCap~greaterThan:
+          schema:
+            - type: number
+              required: false
+              description: Marketcap Greater Than
+        marketCap~equals:
+          schema:
+            - type: number
+              required: false
+              description: Marketcap Equals
+        marketCap~lessThan:
+          schema:
+            - type: number
+              required: false
+              description: Marketcap Less Than
+        fullyDilutedValuation~greaterThan:
+          schema:
+            - type: number
+              required: false
+              description: Fully Diluted Valuation Greater Than
+        fullyDilutedValuation~equals:
+          schema:
+            - type: number
+              required: false
+              description: Fully Diluted Valuation Equals
+        fullyDilutedValuation~lessThan:
+          schema:
+            - type: number
+              required: false
+              description: Fully Diluted Valuation Less Than
+        volume~greaterThan:
+          schema:
+            - type: number
+              required: false
+              description: Volume Greater Than
+        volume~equals:
+          schema:
+            - type: number
+              required: false
+              description: Volume Equals
+        volume~lessThan:
+          schema:
+            - type: number
+              required: false
+              description: Volume Less Than
+        priceChange1h~greaterThan:
+          schema:
+            - type: number
+              required: false
+              description: Price Change 1h Greater Than
+        priceChange1h~equals:
+          schema:
+            - type: number
+              required: false
+              description: Price Change 1h Equals
+        priceChange1h~lessThan:
+          schema:
+            - type: number
+              required: false
+              description: Price Change 1h Less Than
+        priceChange1d~greaterThan:
+          schema:
+            - type: number
+              required: false
+              description: Price Change 1d Greater Than
+        priceChange1d~equals:
+          schema:
+            - type: number
+              required: false
+              description: Price Change 1d Equals
+        priceChange1d~lessThan:
+          schema:
+            - type: number
+              required: false
+              description: Price Change 1d Less Than
+        priceChange7d~greaterThan:
+          schema:
+            - type: number
+              required: false
+              description: Price Change 7d Greater Than
+        priceChange7d~equals:
+          schema:
+            - type: number
+              required: false
+              description: Price Change 7d Equals
+        priceChange7d~lessThan:
+          schema:
+            - type: number
+              required: false
+              description: Price Change 7d Less Than
+        availableSupply~greaterThan:
+          schema:
+            - type: number
+              required: false
+              description: Available Supply Greater Than
+        availableSupply~equals:
+          schema:
+            - type: number
+              required: false
+              description: Available Supply Equals
+        availableSupply~lessThan:
+          schema:
+            - type: number
+              required: false
+              description: Available Supply Less Than
+        totalSupply~greaterThan:
+          schema:
+            - type: number
+              required: false
+              description: Total Supply Greater Than
+        totalSupply~equals:
+          schema:
+            - type: number
+              required: false
+              description: Total Supply Equals
+        totalSupply~lessThan:
+          schema:
+            - type: number
+              required: false
+              description: Total Supply Less Than
+        rank~greaterThan:
+          schema:
+            - type: number
+              required: false
+              description: Rank Greater Than
+        rank~equals:
+          schema:
+            - type: number
+              required: false
+              description: Rank Equals
+        rank~lessThan:
+          schema:
+            - type: number
+              required: false
+              description: Rank Less Than
+        price~greaterThan:
+          schema:
+            - type: number
+              required: false
+              description: Price Greater Than
+        price~equals:
+          schema:
+            - type: number
+              required: false
+              description: Price Equals
+        price~lessThan:
+          schema:
+            - type: number
+              required: false
+              description: Price Less Than
+        riskScore~greaterThan:
+          schema:
+            - type: number
+              required: false
+              description: Risk Score Greater Than (Only if includeRiskScore=true)
+        riskScore~equals:
+          schema:
+            - type: number
+              required: false
+              description: RiskScore Equals (Only if includeRiskScore=true)
+        riskScore~lessThan:
+          schema:
+            - type: number
+              required: false
+              description: RiskScore Less Than (Only if includeRiskScore=true)
+      header: {}
+      cookie: {}
+    body: {}
+  response:
+    '200':
+      application/json:
+        schemaArray:
+          - type: object
+            properties:
+              meta:
+                allOf:
+                  - $ref: '#/components/schemas/PageMetaDto'
+              result:
+                allOf:
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CoinListResponseItemDto'
+            refIdentifier: '#/components/schemas/CoinListResponseDto'
+            requiredProperties:
+              - meta
+              - result
+        examples:
+          example:
+            value:
+              meta:
+                page: 1
+                limit: 40
+                itemCount: 100
+                pageCount: 3
+                hasPreviousPage: false
+                hasNextPage: true
+              result:
+                - id: <string>
+                  icon: <string>
+                  name: <string>
+                  symbol: <string>
+                  rank: 123
+                  price: 123
+                  priceBtc: 123
+                  volume: 123
+                  marketCap: 123
+                  availableSupply: 123
+                  totalSupply: 123
+                  fullyDilutedValuation: 123
+                  priceChange1h: 123
+                  priceChange1d: 123
+                  priceChange1w: 123
+                  websiteUrl: <string>
+                  redditUrl: <string>
+                  twitterUrl: <string>
+                  contractAddress: <string>
+                  contractAddresses:
+                    - blockchain: <string>
+                      contractAddress: <string>
+                  decimals: 123
+                  explorers:
+                    - <string>
+                  liquidityScore: 123
+                  volatilityScore: 123
+                  marketCapScore: 123
+                  riskScore: 123
+                  avgChange: 123
+        description: Get coins list
+    '401':
+      _mintlify/placeholder:
+        schemaArray:
+          - type: any
+            description: Unauthorized
+        examples: {}
+        description: Unauthorized
+  deprecated: false
+  type: path
+  xMint:
+    content: >-
+      <Note>**2** credits per request</Note>Get comprehensive data about all
+      cryptocurrencies:
+
+      - Price, market cap, and volume
+
+      - Price changes (1h, 24h, 7d)
+
+      - Supply information
+
+      - Trading metrics
+
+      - Social links and metadata
+
+
+      Optional Parameters:
+
+      - currency: Price display currency (default: USD)
+
+      - limit & skip: Pagination controls
+
+      - includeRiskScore: Add risk analysis data
+
+      - categories: Filter by coin categories
+
+      - blockchains: Filter by blockchain networks
+
+
+      Sorting Options:
+
+      - sortBy: rank, price, volume, etc.
+
+      - sortDir: asc or desc
+    metadata:
+      title: Get Coins
+      og:title: Get Coins
+    href: /openapi/get-coins
+components:
+  schemas:
+    PageMetaDto:
+      type: object
+      properties:
+        page:
+          type: number
+          example: 1
+        limit:
+          type: number
+          example: 40
+        itemCount:
+          type: number
+          example: 100
+        pageCount:
+          type: number
+          example: 3
+        hasPreviousPage:
+          type: boolean
+          example: false
+        hasNextPage:
+          type: boolean
+          example: true
+      required:
+        - page
+        - limit
+        - itemCount
+        - pageCount
+        - hasPreviousPage
+        - hasNextPage
+    ContractAddressDto:
+      type: object
+      properties:
+        blockchain:
+          type: string
+        contractAddress:
+          type: string
+      required:
+        - blockchain
+        - contractAddress
+    CoinListResponseItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+        icon:
+          type: string
+        name:
+          type: string
+        symbol:
+          type: string
+        rank:
+          type: number
+        price:
+          type: number
+        priceBtc:
+          type: number
+        volume:
+          type: number
+        marketCap:
+          type: number
+        availableSupply:
+          type: number
+        totalSupply:
+          type: number
+        fullyDilutedValuation:
+          type: number
+        priceChange1h:
+          type: number
+        priceChange1d:
+          type: number
+        priceChange1w:
+          type: number
+        websiteUrl:
+          type: string
+        redditUrl:
+          type: string
+        twitterUrl:
+          type: string
+        contractAddress:
+          type: string
+        contractAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractAddressDto'
+        decimals:
+          type: number
+        explorers:
+          type: array
+          items:
+            type: string
+        liquidityScore:
+          type: number
+        volatilityScore:
+          type: number
+        marketCapScore:
+          type: number
+        riskScore:
+          type: number
+        avgChange:
+          type: number
+      required:
+        - id
+        - icon
+        - name
+        - symbol
+        - rank
+        - price
+        - priceBtc
+        - volume
+        - marketCap
+        - availableSupply
+        - totalSupply
+        - fullyDilutedValuation
+        - priceChange1h
+        - priceChange1d
+        - priceChange1w
+        - websiteUrl
+        - redditUrl
+        - twitterUrl
+        - explorers
+
+````
+# Get Coins Charts
+
+## OpenAPI
+
+````yaml api-reference/openapi.json get /coins/charts
+paths:
+  path: /coins/charts
+  method: get
+  servers:
+    - url: https://openapiv1.coinstats.app
+  request:
+    security:
+      - title: X API KEY
+        parameters:
+          query: {}
+          header:
+            X-API-KEY:
+              type: apiKey
+              description: 'API key needed to access the endpoints. Example: ''demo-api-key'''
+          cookie: {}
+    parameters:
+      path: {}
+      query:
+        period:
+          schema:
+            - type: enum<string>
+              enum:
+                - all
+                - 24h
+                - 1w
+                - 1m
+                - 3m
+                - 6m
+                - 1y
+              required: true
+        coinIds:
+          schema:
+            - type: string
+              required: true
+      header: {}
+      cookie: {}
+    body: {}
+  response:
+    '200':
+      application/json:
+        schemaArray:
+          - type: array
+            items:
+              allOf:
+                - $ref: '#/components/schemas/CoinsChartsResponseDto'
+        examples:
+          example:
+            value:
+              - coinId: <string>
+                chart:
+                  - - 1438905600
+                    - 2.83162
+                    - 0.0101411
+                    - 1
+                  - - 1438992000
+                    - 2.7976
+                    - 0.0100039
+                    - 1
+                errorMessage: <string>
+        description: Get Historical global avg price chart.
+    '401':
+      _mintlify/placeholder:
+        schemaArray:
+          - type: any
+            description: Unauthorized
+        examples: {}
+        description: Unauthorized
+  deprecated: false
+  type: path
+  xMint:
+    content: >-
+      <Note>**3** credits per request</Note><Accordion title={"Multipliers"}
+      ><Note>In **Query** field **"coinIds"**: credits are multiplied by the
+      number of values.</Note></Accordion>Returns historical chart data for a
+      specific cryptocurrency using coinId.
+    metadata:
+      title: Get Coins Charts
+      og:title: Get Coins Charts
+    href: /openapi/get-coins-charts
+components:
+  schemas:
+    CoinsChartsResponseDto:
+      type: object
+      properties:
+        coinId:
+          type: string
+        chart:
+          type: array
+          description: 'Array of data points: [TIMESTAMP, USD, BTC, ETH]'
+          items:
+            type: array
+            items:
+              type: number
+          example:
+            - - 1438905600
+              - 2.83162
+              - 0.0101411
+              - 1
+            - - 1438992000
+              - 2.7976
+              - 0.0100039
+              - 1
+        errorMessage:
+          type: string
+      required:
+        - coinId
+        - chart
+
+````
+# Btc Dominance
+
+## OpenAPI
+
+````yaml api-reference/openapi.json get /insights/btc-dominance
+paths:
+  path: /insights/btc-dominance
+  method: get
+  servers:
+    - url: https://openapiv1.coinstats.app
+  request:
+    security:
+      - title: X API KEY
+        parameters:
+          query: {}
+          header:
+            X-API-KEY:
+              type: apiKey
+              description: 'API key needed to access the endpoints. Example: ''demo-api-key'''
+          cookie: {}
+    parameters:
+      path: {}
+      query:
+        type:
+          schema:
+            - type: enum<string>
+              enum:
+                - 24h
+                - 1w
+                - 1m
+                - 3m
+                - 6m
+                - 1y
+                - all
+              required: true
+              description: Time period for the data
+      header: {}
+      cookie: {}
+    body: {}
+  response:
+    '200':
+      application/json:
+        schemaArray:
+          - type: object
+            properties:
+              data:
+                allOf:
+                  - type: array
+                    description: Array of timestamp and BTC dominance percentage pairs
+                    example:
+                      - - 1746441300
+                        - 61.59
+                      - - 1746441400
+                        - 62.1
+                      - - 1746441500
+                        - 61.85
+                    items:
+                      type: array
+                      items:
+                        oneOf:
+                          - type: number
+                            description: Unix timestamp in seconds
+                          - type: number
+                            description: BTC dominance percentage
+            refIdentifier: '#/components/schemas/BtcDominanceDto'
+            requiredProperties:
+              - data
+        examples:
+          example:
+            value:
+              data:
+                - - 1746441300
+                  - 61.59
+                - - 1746441400
+                  - 62.1
+                - - 1746441500
+                  - 61.85
+        description: ''
+    '401':
+      _mintlify/placeholder:
+        schemaArray:
+          - type: any
+            description: Unauthorized
+        examples: {}
+        description: Unauthorized
+  deprecated: false
+  type: path
+  xMint:
+    content: >-
+      <Note>**50** credits per request</Note>Returns Bitcoin market dominance
+      data showing BTC's percentage share of the total cryptocurrency market
+      capitalization over a specified time period. Supports multiple time
+      frames: 24 hours, 1 week, 1 month, 3 months, 6 months, 1 year, or all
+      available data. Data is returned as pairs of [timestamp, percentage]
+      values. Useful for analyzing market trends and Bitcoin's relative strength
+      in the overall crypto ecosystem.
+    metadata:
+      title: Btc Dominance
+      og:title: Btc Dominance
+    href: /openapi/btc-dominance
+components:
+  schemas: {}
+
+````

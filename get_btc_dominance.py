@@ -2,13 +2,19 @@ import requests
 import datetime
 import sys
 from collections import defaultdict
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
 def fetch_btc_dominance_ohlc():
     """Fetch and process Bitcoin dominance data into 1-hour OHLC"""
 
     # API configuration (remains the same)
-    api_key = "5Bpyex/DLG78WDJBudkqicJGmCP+K1DqS6J7xth5Ybg="
+    api_key = os.getenv('API_KEY')
+    if not api_key:
+        print("Error: API_KEY not found in environment variables")
+        sys.exit(1)
     base_url = "https://openapiv1.coinstats.app"
     endpoint = "/insights/btc-dominance"
     params = {"type": "24h"}

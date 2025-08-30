@@ -114,7 +114,7 @@ The main analysis script provides:
 
 ### Environment Variables
 
-- `API_KEY`: Required for BTC dominance data from [Coinstats API] ( https://openapi.coinstats.app/login/ )
+- `API_KEY`: Required for BTC dominance data from [Coinstats API](https://openapi.coinstats.app/login/)
 
 ### Trend Thresholds
 

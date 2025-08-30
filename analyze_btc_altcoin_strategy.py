@@ -16,69 +16,69 @@ class Trend(Enum):
     """Trend classification for price movements"""
     BULLISH = "Bullish"
     BEARISH = "Bearish"
-    NEUTRAL = "Neutral"
+    SIDEWAYS = "Sideways"
 
 
 class MWC(Enum):
     """Minor Wave Cycle (weekly) trend classification"""
     BULLISH = "Bullish"
     BEARISH = "Bearish"
-    NEUTRAL = "Neutral"
+    SIDEWAYS = "Sideways"
 
 
 class HWC(Enum):
     """Higher Wave Cycle (monthly) trend classification"""
     BULLISH = "Bullish"
     BEARISH = "Bearish"
-    NEUTRAL = "Neutral"
+    SIDEWAYS = "Sideways"
 
 
 # Decision matrix with all 27 combinations as specified in blueprint
 DECISION_MATRIX = {
     # BTC Bullish, BTC.D Bullish, MWC Bullish
     (Trend.BULLISH, Trend.BULLISH, MWC.BULLISH): "Strong BTC buy (Low risk)",
-    (Trend.BULLISH, Trend.BULLISH, MWC.NEUTRAL): "Moderate BTC buy (Medium risk)",
+    (Trend.BULLISH, Trend.BULLISH, MWC.SIDEWAYS): "Moderate BTC buy (Medium risk)",
     (Trend.BULLISH, Trend.BULLISH, MWC.BEARISH): "Avoid BTC (High risk)",
 
     # BTC Bullish, BTC.D Bearish, MWC Bullish
     (Trend.BULLISH, Trend.BEARISH, MWC.BULLISH): "Risky altcoin buy (Requires confirmation)",
-    (Trend.BULLISH, Trend.BEARISH, MWC.NEUTRAL): "Altcoin accumulation (Medium risk)",
+    (Trend.BULLISH, Trend.BEARISH, MWC.SIDEWAYS): "Altcoin accumulation (Medium risk)",
     (Trend.BULLISH, Trend.BEARISH, MWC.BEARISH): "Altcoin sell (High risk)",
 
-    # BTC Bullish, BTC.D Neutral, MWC Bullish
-    (Trend.BULLISH, Trend.NEUTRAL, MWC.BULLISH): "Strong BTC buy (Medium risk)",
-    (Trend.BULLISH, Trend.NEUTRAL, MWC.NEUTRAL): "BTC accumulation (Medium risk)",
-    (Trend.BULLISH, Trend.NEUTRAL, MWC.BEARISH): "BTC sell (High risk)",
+    # BTC Bullish, BTC.D Range Market, MWC Bullish
+    (Trend.BULLISH, Trend.SIDEWAYS, MWC.BULLISH): "Strong BTC buy (Medium risk)",
+    (Trend.BULLISH, Trend.SIDEWAYS, MWC.SIDEWAYS): "BTC accumulation (Medium risk)",
+    (Trend.BULLISH, Trend.SIDEWAYS, MWC.BEARISH): "BTC sell (High risk)",
 
     # BTC Bearish, BTC.D Bullish, MWC Bullish
     (Trend.BEARISH, Trend.BULLISH, MWC.BULLISH): "BTC short (Medium risk)",
-    (Trend.BEARISH, Trend.BULLISH, MWC.NEUTRAL): "BTC short (Low risk)",
+    (Trend.BEARISH, Trend.BULLISH, MWC.SIDEWAYS): "BTC short (Low risk)",
     (Trend.BEARISH, Trend.BULLISH, MWC.BEARISH): "Strong BTC short (High risk)",
 
     # BTC Bearish, BTC.D Bearish, MWC Bullish
     (Trend.BEARISH, Trend.BEARISH, MWC.BULLISH): "Altcoin buy (Low risk)",
-    (Trend.BEARISH, Trend.BEARISH, MWC.NEUTRAL): "Altcoin accumulation (Low risk)",
+    (Trend.BEARISH, Trend.BEARISH, MWC.SIDEWAYS): "Altcoin accumulation (Low risk)",
     (Trend.BEARISH, Trend.BEARISH, MWC.BEARISH): "Strong altcoin buy (Medium risk)",
 
-    # BTC Bearish, BTC.D Neutral, MWC Bullish
-    (Trend.BEARISH, Trend.NEUTRAL, MWC.BULLISH): "BTC short (High risk)",
-    (Trend.BEARISH, Trend.NEUTRAL, MWC.NEUTRAL): "Market neutral (Low risk)",
-    (Trend.BEARISH, Trend.NEUTRAL, MWC.BEARISH): "Altcoin buy (Medium risk)",
+    # BTC Bearish, BTC.D Range Market, MWC Bullish
+    (Trend.BEARISH, Trend.SIDEWAYS, MWC.BULLISH): "BTC short (High risk)",
+    (Trend.BEARISH, Trend.SIDEWAYS, MWC.SIDEWAYS): "Market range (Low risk)",
+    (Trend.BEARISH, Trend.SIDEWAYS, MWC.BEARISH): "Altcoin buy (Medium risk)",
 
-    # BTC Neutral, BTC.D Bullish, MWC Bullish
-    (Trend.NEUTRAL, Trend.BULLISH, MWC.BULLISH): "BTC accumulation (Low risk)",
-    (Trend.NEUTRAL, Trend.BULLISH, MWC.NEUTRAL): "Market watch (Low risk)",
-    (Trend.NEUTRAL, Trend.BULLISH, MWC.BEARISH): "Altcoin sell (Medium risk)",
+    # BTC Range Market, BTC.D Bullish, MWC Bullish
+    (Trend.SIDEWAYS, Trend.BULLISH, MWC.BULLISH): "BTC accumulation (Low risk)",
+    (Trend.SIDEWAYS, Trend.BULLISH, MWC.SIDEWAYS): "Market watch (Low risk)",
+    (Trend.SIDEWAYS, Trend.BULLISH, MWC.BEARISH): "Altcoin sell (Medium risk)",
 
-    # BTC Neutral, BTC.D Bearish, MWC Bullish
-    (Trend.NEUTRAL, Trend.BEARISH, MWC.BULLISH): "Altcoin accumulation (Low risk)",
-    (Trend.NEUTRAL, Trend.BEARISH, MWC.NEUTRAL): "Market watch (Low risk)",
-    (Trend.NEUTRAL, Trend.BEARISH, MWC.BEARISH): "BTC buy (Medium risk)",
+    # BTC Range Market, BTC.D Bearish, MWC Bullish
+    (Trend.SIDEWAYS, Trend.BEARISH, MWC.BULLISH): "Altcoin accumulation (Low risk)",
+    (Trend.SIDEWAYS, Trend.BEARISH, MWC.SIDEWAYS): "Market watch (Low risk)",
+    (Trend.SIDEWAYS, Trend.BEARISH, MWC.BEARISH): "BTC buy (Medium risk)",
 
-    # BTC Neutral, BTC.D Neutral, MWC Bullish
-    (Trend.NEUTRAL, Trend.NEUTRAL, MWC.BULLISH): "Market indecisive (Low risk)",
-    (Trend.NEUTRAL, Trend.NEUTRAL, MWC.NEUTRAL): "MARKET_INDECISIVE",
-    (Trend.NEUTRAL, Trend.NEUTRAL, MWC.BEARISH): "Market indecisive (Low risk)",
+    # BTC Range Market, BTC.D Range Market, MWC Bullish
+    (Trend.SIDEWAYS, Trend.SIDEWAYS, MWC.BULLISH): "Market range (Low risk)",
+    (Trend.SIDEWAYS, Trend.SIDEWAYS, MWC.SIDEWAYS): "MARKET_RANGE",
+    (Trend.SIDEWAYS, Trend.SIDEWAYS, MWC.BEARISH): "Market range (Low risk)",
 }
 
 
@@ -177,7 +177,7 @@ def calculate_trend(data: List[Tuple[datetime, float, float]],
     elif percentage_change < bearish_threshold:
         return Trend.BEARISH, percentage_change
     else:
-        return Trend.NEUTRAL, percentage_change
+        return Trend.SIDEWAYS, percentage_change
 
 
 def calculate_mwc_trend(data: List[Tuple[datetime, float, float]],
@@ -198,7 +198,7 @@ def calculate_mwc_trend(data: List[Tuple[datetime, float, float]],
     elif percentage_change < bearish_threshold:
         return MWC.BEARISH, percentage_change
     else:
-        return MWC.NEUTRAL, percentage_change
+        return MWC.SIDEWAYS, percentage_change
 
 
 def calculate_hwc_trend(data: List[Tuple[datetime, float, float]],
@@ -220,7 +220,7 @@ def calculate_hwc_trend(data: List[Tuple[datetime, float, float]],
         return HWC.BEARISH, percentage_change
 
     else:
-        return HWC.NEUTRAL, percentage_change
+        return HWC.SIDEWAYS, percentage_change
 
 
 def get_risk_context(btc_trend: Trend, btc_d_trend: Trend, mwc_status: MWC, hwc_status: Optional[MWC] = None) -> str:
@@ -260,9 +260,9 @@ def get_confidence_score(btc_trend: Trend, btc_d_trend: Trend, mwc_status: MWC, 
     elif (btc_trend.value == btc_d_trend.value) or (btc_trend.value == mwc_status.value) or (btc_d_trend.value == mwc_status.value):
         confidence += 10
 
-    # Decrease confidence for neutral trends (compare values since different enum types)
-    if (Trend.NEUTRAL.value in [btc_trend.value, btc_d_trend.value] or
-            mwc_status.value == MWC.NEUTRAL.value):
+    # Decrease confidence for sideways trends (compare values since different enum types)
+    if (Trend.SIDEWAYS.value in [btc_trend.value, btc_d_trend.value] or
+            mwc_status.value == MWC.SIDEWAYS.value):
         confidence -= 15
 
     # Adjust confidence based on MWC/HWC alignment

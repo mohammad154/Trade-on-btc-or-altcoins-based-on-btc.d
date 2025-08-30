@@ -1,4 +1,4 @@
-# Buy BTC or Altcoins based on BTC.D ( only for futures trading )
+# BTC/Altcoin Trading Strategy Analyzer
 
 A sophisticated cryptocurrency trading strategy analyzer that implements a multi-timeframe approach using Bitcoin price data, Bitcoin dominance, and market cycle analysis to generate trading recommendations.
 
@@ -35,7 +35,7 @@ The system uses a comprehensive decision matrix with 27 combinations:
 
    ```bash
    git clone <repository-url>
-   cd My_Crypto_News_API_Model_V2
+   cd Trade-on-btc-or-altcoins-based-on-btc.d
    ```
 
 2. **Create virtual environment** (optional but recommended)
@@ -60,7 +60,7 @@ The system uses a comprehensive decision matrix with 27 combinations:
 ## 📁 Project Structure
 
 ```
-My_Crypto_News_API_Model_V2/
+Trade-on-btc-or-altcoins-based-on-btc.d/
 ├── analyze_btc_altcoin_strategy.py  # Main analysis script
 ├── get_btc_candles_daily.py        # Fetch BTC daily/hourly data
 ├── get_btc_candles_weekly.py       # Fetch BTC weekly data (MWC)
@@ -68,6 +68,7 @@ My_Crypto_News_API_Model_V2/
 ├── get_btc_dominance.py            # Fetch BTC dominance data
 ├── requirements.txt                # Python dependencies
 ├── .env                           # Environment variables
+├── .gitignore                     # Git ignore file
 └── README.md                      # This file
 ```
 

@@ -1,4 +1,4 @@
-# BTC/Altcoin Trading Strategy Analyzer
+# BTC/Altcoin Trading Strategy Analyzer (only for futures trading)
 
 A sophisticated cryptocurrency trading strategy analyzer that implements a multi-timeframe approach using Bitcoin price data, Bitcoin dominance, and market cycle analysis to generate trading recommendations.
 

@@ -73,7 +73,7 @@ My_Crypto_News_API_Model_V2/
 
 ## 🔧 Dependencies
 
-- **ccxt** - Cryptocurrency exchange API library
+- **ccxt** - [Cryptocurrency exchange API library](https://docs.ccxt.com/#/)
 - **requests** - HTTP requests for API calls
 - **python-dotenv** - Environment variable management
 

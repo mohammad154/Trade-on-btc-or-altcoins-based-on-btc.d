@@ -6,7 +6,7 @@ Implements trading strategy based on BTC price, BTC dominance, and weekly candle
 
 import subprocess
 import re
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from enum import Enum
 from typing import List, Tuple, Optional
 import sys
@@ -316,7 +316,8 @@ def main():
         recommendation = DECISION_MATRIX.get(decision_key, "MARKET_INDECISIVE")
 
         # Generate output
-        current_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
+        current_time = datetime.now(
+            timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
         print(f"\n[{current_time}]")
         print(

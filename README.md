@@ -103,13 +103,29 @@ python get_btc_dominance.py        # 24 hours of BTC dominance data
 The main analysis script provides:
 
 - **Current timestamp** in ISO format
-- **BTC 7h Trend** with percentage change and direction
-- **BTC.D 7h Trend** with percentage change and direction
+- **BTC 7h Trend** with percentage change and direction (▲/▼ arrows)
+- **BTC.D 7h Trend** with percentage change and direction (▲/▼ arrows)
 - **MWC Status** (Weekly trend with percentage change)
 - **HWC Status** (Monthly trend with percentage change)
 - **Trading Recommendation** based on decision matrix
-- **Risk Context** analysis
-- **Confidence Score** (50-95%) based on trend alignment
+- **Risk Context** analysis including MWC-HWC conflict detection
+- **Confidence Score** (50-95%) based on historical pattern match
+
+### Example Output
+
+```
+[2025-08-30T22:08:39Z]
+BTC 7h Trend: ▼ 0.34% (Sideways)
+BTC.D 7h Trend: ▲ 0.02% (Sideways)
+MWC Status: Bearish (Weekly -5.9%)
+HWC Status: Sideways (Monthly +1.1%)
+
+RECOMMENDATION: Market range (Low risk)
+RISK CONTEXT: WARNING: MWC-HWC conflict (Bearish vs Sideways) - Standard market conditions - monitor closely
+CONFIDENCE: 50% (based on historical pattern match)
+```
+
+The system automatically detects conflicts between weekly and monthly trends and provides appropriate risk context warnings.
 
 ## ⚙️ Configuration
 
@@ -145,7 +161,11 @@ The system includes built-in risk management:
 | Bullish   | Bullish     | Bullish   | Strong BTC buy (Low risk)                 |
 | Bullish   | Bearish     | Bullish   | Risky altcoin buy (Requires confirmation) |
 | Bearish   | Bearish     | Bullish   | Altcoin buy (Low risk)                    |
-| Sideways  | Sideways    | Sideways  | Market indecisive (Low risk)              |
+| Sideways  | Sideways    | Bullish   | Market range (Low risk)                   |
+| Sideways  | Bearish     | Bullish   | Altcoin accumulation (Low risk)           |
+| Bearish   | Bullish     | Bullish   | BTC short (Medium risk)                   |
+
+_Note: The complete decision matrix contains 27 combinations, with recommendations tailored to each market condition including risk levels._
 
 ## 🚨 Error Handling
 
